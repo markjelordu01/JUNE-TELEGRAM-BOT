@@ -2,10 +2,11 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import feedparser
 import requests
+import os
 
 # 🔑 KEYS
-TELEGRAM_TOKEN = "8787117098:AAF8hrlfNcxkPkY-siheN5q6TUVMK3sRAg0"
-JUNE_API_KEY = "sk_live_e23842c4cd1d415eb5f205402fc519e00bf8e9b272814e63baa83e71879808e2"
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+JUNE_API_KEY = os.getenv("JUNE_API_KEY")
 
 # 📰 GET CRYPTO NEWS
 def get_crypto_news():
