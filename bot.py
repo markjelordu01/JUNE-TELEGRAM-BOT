@@ -17,7 +17,7 @@ def get_crypto_news():
     news = ""
     for entry in entries:
         news += f"{entry.title}\n{entry.summary}\n\n"
-
+    
     return news
 
 # GET FOREX NEWS
@@ -42,28 +42,15 @@ async def forexnews(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     summary = summary.replace("**", "")
 
-    await update.message.reply_text(summary)
+    await update.message.reply_text(summary[:4000])
 
 #SUMMARIZE
-def summarize(news_text, mode="crypto"):
-    
+def summarize(text, mode="crypto"):
+
     if mode == "crypto":
         intro = "You are a crypto market analyst."
     else:
         intro = "You are a forex market analyst."
-
-    prompt = f"""
-Summarize these {mode} news.
-
-Format:
-Title
-Key Points (3 bullets)
-Sentiment (Bullish/Bearish/Neutral)
-Why it matters
-
-News:
-{news_text}
-"""
 
     response = requests.post(
         "https://api.blockchain.info/ai/api/v1/chat/completions",
@@ -75,7 +62,7 @@ News:
             "model": "blockchain/june",
             "messages": [
                 {"role": "system", "content": intro},
-                {"role": "user", "content": prompt}
+                {"role": "user", "content": text}
             ]
         }
     )
@@ -95,12 +82,140 @@ async def cryptonews(update: Update, context: ContextTypes.DEFAULT_TYPE):
     #CLEAN OUTPUT
     summary = summary.replace("**", "")
 
-    await update.message.reply_text(summary)
+    await update.message.reply_text(summary[:4000])
 
+#Bullish
+async def bullish(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("📈 Finding bullish signals...\n")
+
+    news = get_crypto_news()
+    
+    prompt = f"""
+From this news, extract only BULLISH signals.
+
+Format:
+- Asset:
+- Reason:
+- Confidence (Low/Medium/High)
+
+News:
+{news}
+"""
+    result = summarize(prompt, mode="crypto")
+    result = result.replace("**", "")
+    await update.message.reply_text(result[:4000])
+
+#Bearish
+async def bearish(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("📉 Finding bearish signals...\n")
+
+    news = get_crypto_news()
+    
+    prompt = f"""
+From this news, extract only BEARISH signals.
+
+Format:
+- Asset:
+- Reason:
+- Confidence (Low/Medium/High)
+News:
+{news}
+"""
+    result = summarize(prompt, mode="crypto")
+    result = result.replace("**", "")
+    await update.message.reply_text(result[:4000])
+
+#BTC
+async def btc(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("🪙 Analyzing Bitcoin...\n")
+
+    news = get_crypto_news()
+
+    prompt = f"""
+Analyze Bitcoin (BTC) based on this news.
+
+Format:
+- Trend: (Bullish/Bearish/Neutral)
+- Key Drivers:
+- Short-term Outlook:
+
+News:
+{news}
+"""
+    result = summarize(prompt, mode="crypto")
+    result = result.replace("**", "")
+    await update.message.reply_text(result[:4000])
+
+#GOLD
+async def gold(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("🥇 Analyzing Gold (XAUUSD)...\n")
+
+    news = get_forex_news()
+
+    prompt = f"""
+Analyze Gold (XAUUSD) based on this news.
+
+Format:
+- Trend: (Bullish/Bearish/Neutral)
+- Key Drivers:
+- Outlook:
+
+News:
+{news}
+"""
+    result = summarize(prompt, mode="forex")
+    result = result.replace("**", "")
+    await update.message.reply_text(result[:4000])
+
+#START MESSAGE
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    message = """
+🤖 Welcome to ChainCast Bot!
+
+Available Commands:
+
+📰 /cryptonews - Latest crypto news  
+💱 /forexnews - Latest forex news  
+
+📈 /bullish - Bullish signals  
+📉 /bearish - Bearish signals  
+
+🪙 /btc - Bitcoin analysis  
+🥇 /gold - Gold (XAUUSD) analysis  
+
+ℹ️ /help - Show commands again
+"""
+
+    await update.message.reply_text(message)
+
+#HELP
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    message = """
+📖 Command Guide:
+
+/cryptonews → AI summary of crypto news  
+/forexnews → AI summary of forex news  
+
+/bullish → Extract bullish opportunities  
+/bearish → Extract bearish signals  
+
+/btc → Bitcoin trend & outlook  
+/gold → Gold (XAUUSD) analysis  
+
+🚀 Powered by AI
+"""
+
+    await update.message.reply_text(message)
 #TART BOT
 app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
 app.add_handler(CommandHandler("cryptonews", cryptonews))
 app.add_handler(CommandHandler("forexnews", forexnews))
+app.add_handler(CommandHandler("bullish", bullish))
+app.add_handler(CommandHandler("bearish", bearish))
+app.add_handler(CommandHandler("btc", btc))
+app.add_handler(CommandHandler("gold", gold))
+app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("help", help_command))
 
 print("Bot is running... 🚀")
 app.run_polling()
