@@ -68,10 +68,15 @@ def summarize(text, mode="crypto"):
     )
 
     try:
+        response = requests.post(..., timeout=15)
         result = response.json()
         return result["choices"][0]["message"]["content"]
+
+    except requests.exceptions.Timeout:
+        return "⏱️ AI is taking too long. Try again."
+
     except Exception as e:
-        print("ERROR:", response.text)
+        print("ERROR:", e)
         return "⚠️ Error sa AI response"
 
 #COMMAND
@@ -233,7 +238,7 @@ def clean_format(text):
     text = text.replace("Trend:", "\n📈 Trend:")
     text = text.replace("Outlook:", "\n🔮 Outlook:")
     text = text.replace("•", "• ")
-    text = text.replace("-", "• ")
+    text = text.replace("\n-", "\n•")
     text = text.replace("  ", " ")
     text = text.replace("\n\n\n", "\n\n")
     return text.strip()
