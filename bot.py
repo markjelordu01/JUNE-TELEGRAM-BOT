@@ -77,7 +77,7 @@ def summarize(text, mode="crypto"):
 
     except Exception as e:
         print("ERROR:", e)
-        return "⚠️ Error sa AI response"
+        return "⚠️ Error System Response"
 
 #COMMAND
 async def cryptonews(update: Update, context: ContextTypes.DEFAULT_TYPE):
