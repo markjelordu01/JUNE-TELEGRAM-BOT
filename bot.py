@@ -103,7 +103,8 @@ News:
 """
     result = summarize(prompt, mode="crypto")
     result = result.replace("**", "")
-    summary = clean_format(summary)
+    result = clean_format(result)
+
     await update.message.reply_text(result[:4000])
 
 #Bearish
@@ -124,7 +125,8 @@ News:
 """
     result = summarize(prompt, mode="crypto")
     result = result.replace("**", "")
-    summary = clean_format(summary)
+    result = clean_format(result)
+
     await update.message.reply_text(result[:4000])
 
 #BTC
@@ -146,7 +148,8 @@ News:
 """
     result = summarize(prompt, mode="crypto")
     result = result.replace("**", "")
-    summary = clean_format(summary)
+    result = clean_format(result)
+
     await update.message.reply_text(result[:4000])
 
 #GOLD
@@ -168,9 +171,9 @@ News:
 """
     result = summarize(prompt, mode="forex")
     result = result.replace("**", "")
-    summary = clean_format(summary)
-    await update.message.reply_text(result[:4000])
+    result = clean_format(result)
 
+    await update.message.reply_text(result[:4000])
 #START MESSAGE
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message = """
@@ -227,7 +230,8 @@ def clean_format(text):
     text = text.replace("Why it matters:", "\n💡 Why it matters:")
     text = text.replace("Trend:", "\n📈 Trend:")
     text = text.replace("Outlook:", "\n🔮 Outlook:")
-
+    text = text.replace("•", "• ")
+    text = text.replace("-", "• ")
     return text.strip()
 
 
