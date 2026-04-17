@@ -52,23 +52,23 @@ def summarize(text, mode="crypto"):
     else:
         intro = "You are a forex market analyst."
 
-    response = requests.post(
-        "https://api.blockchain.info/ai/api/v1/chat/completions",
-        headers={
-            "Authorization": f"Bearer {JUNE_API_KEY}",
-            "Content-Type": "application/json"
-        },
-        json={
-            "model": "blockchain/june",
-            "messages": [
-                {"role": "system", "content": intro},
-                {"role": "user", "content": text}
-            ]
-        }
-    )
-
     try:
-        response = requests.post(..., timeout=15)
+        response = requests.post(
+            "https://api.blockchain.info/ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {JUNE_API_KEY}",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "blockchain/june",
+                "messages": [
+                    {"role": "system", "content": intro},
+                    {"role": "user", "content": text}
+                ]
+            },
+            timeout=15
+        )
+
         result = response.json()
         return result["choices"][0]["message"]["content"]
 
@@ -222,23 +222,37 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(message)
 
 def clean_format(text):
-    # remove HTML breaks
+    # remove HTML
     text = text.replace("<br>", "\n")
-
-    # remove pipes (|)
     text = text.replace("|", "")
 
-    # fix spacing
+    # remove markdown bold
+    text = text.replace("**", "")
+
+    # normalize bullets
+    text = text.replace("•", "▪️")
+    text = text.replace("- ", "▪️ ")
+
+    # spacing fix
     text = text.replace("\n\n\n", "\n\n")
 
-    # optional: add spacing before sections
+    # SECTION STYLING
     text = text.replace("Key Points:", "\n📌 Key Points:")
     text = text.replace("Sentiment:", "\n📊 Sentiment:")
     text = text.replace("Why it matters:", "\n💡 Why it matters:")
     text = text.replace("Trend:", "\n📈 Trend:")
     text = text.replace("Outlook:", "\n🔮 Outlook:")
-    text = text.replace("  ", " ")
-    text = text.replace("\n\n\n", "\n\n")
+
+    # SIGNAL FORMAT
+    text = text.replace("Asset:", "\n📌 Asset:")
+    text = text.replace("Reason:", "\n🧠 Reason:")
+    text = text.replace("Confidence:", "\n📊 Confidence:")
+
+    # ADD LINE SEPARATOR 
+    text = text.replace("\n1.", "\n━━━━━━━━━━━━━━\n\n1.")
+    text = text.replace("\n2.", "\n━━━━━━━━━━━━━━\n\n2.")
+    text = text.replace("\n3.", "\n━━━━━━━━━━━━━━\n\n3.")
+
     return text.strip()
 
 
