@@ -41,7 +41,7 @@ async def forexnews(update: Update, context: ContextTypes.DEFAULT_TYPE):
     summary = summarize(news, mode="forex")
 
     summary = summary.replace("**", "")
-
+    summary = clean_format(summary)
     await update.message.reply_text(summary[:4000])
 
 #SUMMARIZE
@@ -81,7 +81,7 @@ async def cryptonews(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     #CLEAN OUTPUT
     summary = summary.replace("**", "")
-
+    summary = clean_format(summary)
     await update.message.reply_text(summary[:4000])
 
 #Bullish
@@ -103,6 +103,7 @@ News:
 """
     result = summarize(prompt, mode="crypto")
     result = result.replace("**", "")
+    summary = clean_format(summary)
     await update.message.reply_text(result[:4000])
 
 #Bearish
@@ -123,6 +124,7 @@ News:
 """
     result = summarize(prompt, mode="crypto")
     result = result.replace("**", "")
+    summary = clean_format(summary)
     await update.message.reply_text(result[:4000])
 
 #BTC
@@ -144,6 +146,7 @@ News:
 """
     result = summarize(prompt, mode="crypto")
     result = result.replace("**", "")
+    summary = clean_format(summary)
     await update.message.reply_text(result[:4000])
 
 #GOLD
@@ -165,6 +168,7 @@ News:
 """
     result = summarize(prompt, mode="forex")
     result = result.replace("**", "")
+    summary = clean_format(summary)
     await update.message.reply_text(result[:4000])
 
 #START MESSAGE
@@ -206,6 +210,27 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 """
 
     await update.message.reply_text(message)
+
+def clean_format(text):
+    # remove HTML breaks
+    text = text.replace("<br>", "\n")
+
+    # remove pipes (|)
+    text = text.replace("|", "")
+
+    # fix spacing
+    text = text.replace("\n\n\n", "\n\n")
+
+    # optional: add spacing before sections
+    text = text.replace("Key Points:", "\n📌 Key Points:")
+    text = text.replace("Sentiment:", "\n📊 Sentiment:")
+    text = text.replace("Why it matters:", "\n💡 Why it matters:")
+    text = text.replace("Trend:", "\n📈 Trend:")
+    text = text.replace("Outlook:", "\n🔮 Outlook:")
+
+    return text.strip()
+
+
 #TART BOT
 app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
 app.add_handler(CommandHandler("cryptonews", cryptonews))
