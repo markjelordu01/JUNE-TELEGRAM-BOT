@@ -237,8 +237,6 @@ def clean_format(text):
     text = text.replace("Why it matters:", "\n💡 Why it matters:")
     text = text.replace("Trend:", "\n📈 Trend:")
     text = text.replace("Outlook:", "\n🔮 Outlook:")
-    text = text.replace("•", "• ")
-    text = text.replace("\n-", "\n•")
     text = text.replace("  ", " ")
     text = text.replace("\n\n\n", "\n\n")
     return text.strip()
