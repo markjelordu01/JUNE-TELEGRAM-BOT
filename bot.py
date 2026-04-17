@@ -68,8 +68,10 @@ def summarize(text, mode="crypto"):
     )
 
     try:
-        return response.json()["choices"][0]["message"]["content"]
-    except:
+        result = response.json()
+        return result["choices"][0]["message"]["content"]
+    except Exception as e:
+        print("ERROR:", response.text)
         return "⚠️ Error sa AI response"
 
 #COMMAND
@@ -232,6 +234,8 @@ def clean_format(text):
     text = text.replace("Outlook:", "\n🔮 Outlook:")
     text = text.replace("•", "• ")
     text = text.replace("-", "• ")
+    text = text.replace("  ", " ")
+    text = text.replace("\n\n\n", "\n\n")
     return text.strip()
 
 
