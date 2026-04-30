@@ -8,22 +8,22 @@ It pulls real-time news from trusted sources and uses AI to summarize, analyze, 
 
 ## Features
 
-* 📰 **Crypto News Summary**
+* **Crypto News Summary**
   Get the latest crypto headlines summarized with key insights.
 
-* 💱 **Forex News Summary**
+* **Forex News Summary**
   Stay updated with major forex market events and macro trends.
 
-* 📈 **Bullish Signals**
+* **Bullish Signals**
   Extract potential upside opportunities from current news.
 
-* 📉 **Bearish Signals**
+* **Bearish Signals**
   Identify downside risks and negative market sentiment.
 
-* 🪙 **Bitcoin Analysis (BTC)**
+* **Bitcoin Analysis (BTC)**
   Quick outlook based on recent developments.
 
-* 🥇 **Gold Analysis (XAUUSD)**
+* **Gold Analysis (XAUUSD)**
   Macro-driven analysis for gold traders.
 
 ---
@@ -75,7 +75,7 @@ JUNE_API_KEY=your_june_api_key
 
 ---
 
-## ▶️ Run Locally
+## Run Locally
 
 ```
 pip install -r requirements.txt
