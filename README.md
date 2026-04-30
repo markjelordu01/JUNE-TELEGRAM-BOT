@@ -72,31 +72,24 @@ Create a `.env` file:
 TELEGRAM_TOKEN=your_telegram_bot_token
 JUNE_API_KEY=your_june_api_key
 ```
-
+These values are required for the bot to authenticate with Telegram and June AI.
 ---
 
 ## Run Locally
 
-To run it locally, change:
+To run it locally install the dependencies:
 
 ```python
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-JUNE_API_KEY = os.getenv("JUNE_API_KEY")
-```
-
-into:
-
-```python
-TELEGRAM_TOKEN = "your_telegram_bot_token"
-JUNE_API_KEY = "your_june_api_key"
-```
-
-Then run:
-
-```bash
 pip install -r requirements.txt
+```
+
+Run the bot:
+
+```python
 python bot.py
 ```
+
+Make sure your `.env` file is properly set before running the bot.
 ---
 
 ## Notes
