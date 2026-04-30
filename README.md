@@ -77,11 +77,26 @@ JUNE_API_KEY=your_june_api_key
 
 ## Run Locally
 
+To run it locally, change:
+
+```python
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+JUNE_API_KEY = os.getenv("JUNE_API_KEY")
 ```
+
+into:
+
+```python
+TELEGRAM_TOKEN = "your_telegram_bot_token"
+JUNE_API_KEY = "your_june_api_key"
+```
+
+Then run:
+
+```bash
 pip install -r requirements.txt
 python bot.py
 ```
-
 ---
 
 ## Notes
@@ -95,4 +110,5 @@ python bot.py
 ## Author
 
 Built by Markje
-Exploring AI, trading, and Web3 🚀
+
+Exploring AI, trading, and Web3 
