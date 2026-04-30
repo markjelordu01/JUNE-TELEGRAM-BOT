@@ -77,15 +77,15 @@ JUNE_API_KEY=your_june_api_key
 
 ## Run Locally
 
-To run it locally install the dependencies:
+To run it locally make a new terminal and install the dependencies:
 
-```python
+```Bash
 pip install -r requirements.txt
 ```
 
 Run the bot:
 
-```python
+```Bash
 python bot.py
 ```
 
