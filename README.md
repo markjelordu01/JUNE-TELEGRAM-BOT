@@ -72,7 +72,7 @@ Create a `.env` file:
 TELEGRAM_TOKEN=your_telegram_bot_token
 JUNE_API_KEY=your_june_api_key
 ```
-These values are required for the bot to authenticate with Telegram and June AI.
+### These values are required for the bot to authenticate with Telegram and June AI.
 ---
 
 ## Run Locally
@@ -89,7 +89,7 @@ Run the bot:
 python bot.py
 ```
 
-Make sure your `.env` file is properly set before running the bot.
+### Make sure your `.env` file is properly set before running the bot.
 ---
 
 ## Notes
@@ -103,5 +103,3 @@ Make sure your `.env` file is properly set before running the bot.
 ## Author
 
 Built by Markje
-
-Exploring AI, trading, and Web3 
