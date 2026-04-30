@@ -3,11 +3,12 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import feedparser
 import requests
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # KEYS
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 JUNE_API_KEY = os.getenv("JUNE_API_KEY")
-
 
 # GET CRYPTO NEWS
 def get_crypto_news():
@@ -216,7 +217,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 /btc → Bitcoin trend & outlook  
 /gold → Gold (XAUUSD) analysis  
 
-🚀 Powered by AI
+/start → To start the bot and see welcome message 
 """
 
     await update.message.reply_text(message)
